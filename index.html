@@ -3,23 +3,42 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GastroSoft POS - Maqueta Interactiva</title>
+    <title>GastroSoft POS - Maqueta Interactiva Corporativa</title>
+    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            500: '#ec4899',
+                            600: '#db2777',
+                            700: '#be185d'
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- FontAwesome & Google Fonts -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
+        body { font-family: 'Plus Jakarta Sans', sans-serif; }
         .custom-scrollbar::-webkit-scrollbar { width: 6px; height: 6px; }
         .custom-scrollbar::-webkit-scrollbar-track { background: #0f172a; }
-        .custom-scrollbar::-webkit-scrollbar-thumb { background: #334155; border-radius: 4px; }
+        .custom-scrollbar::-webkit-scrollbar-thumb { background: #334155; border-radius: 9999px; }
         .custom-scrollbar::-webkit-scrollbar-thumb:hover { background: #475569; }
     </style>
 </head>
-<body class="h-full font-sans text-slate-100 flex flex-col md:flex-row overflow-hidden bg-slate-950">
+<body class="h-full font-sans text-slate-100 flex flex-col md:flex-row overflow-hidden bg-slate-950 antialiased">
 
-    <!-- Toast Notification -->
-    <div id="toast" class="fixed top-5 right-5 z-50 transform translate-x-full opacity-0 transition-all duration-300 flex items-center gap-3 px-4 py-3 rounded-xl shadow-2xl bg-slate-800 border border-slate-700 text-white text-xs font-semibold">
+    <!-- TOAST NOTIFICATION CONTAINER -->
+    <div id="toast" class="fixed top-5 right-5 z-50 transform translate-x-full opacity-0 transition-all duration-300 flex items-center gap-3 px-4 py-3 rounded-xl shadow-2xl bg-slate-900 border border-slate-700 text-white text-xs font-semibold">
         <i id="toast-icon" class="fa-solid fa-circle-check text-emerald-400 text-base"></i>
-        <span id="toast-message">Notificación</span>
+        <span id="toast-message">Acción realizada con éxito</span>
     </div>
 
     <!-- NAVEGACIÓN LATERAL / SIDEBAR -->
@@ -32,28 +51,34 @@
                         <i class="fa-solid fa-utensils text-lg"></i>
                     </div>
                     <div>
-                        <h1 class="font-black tracking-wider text-white text-base">GASTRO<span class="text-pink-500">POS</span></h1>
-                        <span class="text-[10px] text-slate-400 font-medium block -mt-1">Sistema Gastronómico</span>
+                        <h1 class="font-black tracking-wider text-white text-base">PIZZA<span class="text-pink-500">RANCH</span></h1>
+                        <span class="text-[10px] text-slate-400 font-medium block -mt-1">Software Gastronómico</span>
                     </div>
                 </div>
             </div>
 
-            <!-- Menú Principal -->
-            <nav class="p-3 space-y-1">
-                <button onclick="switchTab('tables')" id="nav-tables" class="nav-btn active w-full flex items-center gap-3 px-4 py-3 rounded-xl text-xs font-bold transition bg-pink-500/10 text-pink-400 border border-pink-500/20">
-                    <i class="fa-solid fa-grip text-base w-5 text-center"></i> Salón y Mesas
+            <!-- Menú Principal con los 5 Módulos -->
+            <nav class="p-3 space-y-1.5">
+                <div class="text-[10px] uppercase font-bold tracking-wider text-slate-500 px-3 my-2">Módulos Principales</div>
+                
+                <button onclick="switchTab('tables')" id="nav-tables" class="nav-btn w-full flex items-center gap-3 px-3.5 py-3 rounded-xl text-xs font-bold transition bg-pink-600 text-white shadow-lg shadow-pink-600/20">
+                    <i class="fa-solid fa-border-all text-base w-5 text-center"></i> Salón y Mesas
                 </button>
-                <button onclick="switchTab('kds')" id="nav-kds" class="nav-btn w-full flex items-center gap-3 px-4 py-3 rounded-xl text-xs font-bold transition text-slate-400 hover:text-slate-200 hover:bg-slate-800/50">
+
+                <button onclick="switchTab('kds')" id="nav-kds" class="nav-btn w-full flex items-center gap-3 px-3.5 py-3 rounded-xl text-xs font-bold transition text-slate-400 hover:text-white hover:bg-slate-800/60">
                     <i class="fa-solid fa-fire-burner text-base w-5 text-center"></i> Cocina (KDS)
                 </button>
-                <button onclick="switchTab('cashier')" id="nav-cashier" class="nav-btn w-full flex items-center gap-3 px-4 py-3 rounded-xl text-xs font-bold transition text-slate-400 hover:text-slate-200 hover:bg-slate-800/50">
+
+                <button onclick="switchTab('cashier')" id="nav-cashier" class="nav-btn w-full flex items-center gap-3 px-3.5 py-3 rounded-xl text-xs font-bold transition text-slate-400 hover:text-white hover:bg-slate-800/60">
                     <i class="fa-solid fa-cash-register text-base w-5 text-center"></i> Caja y Cobros
                 </button>
-                <button onclick="switchTab('stock')" id="nav-stock" class="nav-btn w-full flex items-center gap-3 px-4 py-3 rounded-xl text-xs font-bold transition text-slate-400 hover:text-slate-200 hover:bg-slate-800/50">
+
+                <button onclick="switchTab('stock')" id="nav-stock" class="nav-btn w-full flex items-center gap-3 px-3.5 py-3 rounded-xl text-xs font-bold transition text-slate-400 hover:text-white hover:bg-slate-800/60">
                     <i class="fa-solid fa-boxes-stacked text-base w-5 text-center"></i> Stock e Inventario
                 </button>
-                <button onclick="switchTab('dashboard')" id="nav-dashboard" class="nav-btn w-full flex items-center gap-3 px-4 py-3 rounded-xl text-xs font-bold transition text-slate-400 hover:text-slate-200 hover:bg-slate-800/50">
-                    <i class="fa-solid fa-chart-pie text-base w-5 text-center"></i> Dashboard & Reportes
+
+                <button onclick="switchTab('dashboard')" id="nav-dashboard" class="nav-btn w-full flex items-center gap-3 px-3.5 py-3 rounded-xl text-xs font-bold transition text-slate-400 hover:text-white hover:bg-slate-800/60">
+                    <i class="fa-solid fa-chart-pie text-base w-5 text-center"></i> Dashboard Corporativo
                 </button>
             </nav>
         </div>
@@ -67,78 +92,77 @@
                 <div class="flex-1 overflow-hidden">
                     <p class="text-xs font-bold text-white truncate">Gustavo C.</p>
                     <p class="text-[10px] text-emerald-400 flex items-center gap-1">
-                        <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span> Turno Abierto
+                        <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span> Turno Noche • Central
                     </p>
                 </div>
             </div>
         </div>
     </aside>
 
-    <!-- ÁREA PRINCIPAL -->
-    <main class="flex-1 overflow-y-auto custom-scrollbar p-4 md:p-8 bg-slate-950">
+    <!-- ÁREA PRINCIPAL CONTENT -->
+    <main class="flex-1 overflow-y-auto custom-scrollbar p-4 md:p-8 bg-slate-950 relative">
 
         <!-- 1. SECCIÓN DE SALÓN Y MESAS -->
         <div id="tab-tables" class="space-y-6">
             <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
                 <div>
-                    <h2 class="text-2xl font-bold tracking-tight text-white">Plano del Salón</h2>
-                    <p class="text-sm text-slate-400">Haz clic en cualquier mesa para abrir comandero o gestionar el pedido.</p>
+                    <h2 class="text-2xl font-bold tracking-tight text-white">Plano de Salón y Mesas</h2>
+                    <p class="text-sm text-slate-400">Haz clic en cualquier mesa para abrir el comandero táctil o gestionar consumos.</p>
                 </div>
-                <div class="flex items-center gap-2 bg-slate-900 p-1.5 rounded-xl border border-slate-800 text-xs font-medium">
-                    <button class="px-3 py-1.5 rounded-lg bg-pink-500/20 text-pink-400 font-bold border border-pink-500/30">Todos</button>
-                    <button class="px-3 py-1.5 rounded-lg text-slate-400 hover:text-white transition">Salón Principal</button>
-                    <button class="px-3 py-1.5 rounded-lg text-slate-400 hover:text-white transition">Terraza</button>
-                    <button class="px-3 py-1.5 rounded-lg text-slate-400 hover:text-white transition">VIP</button>
+                <!-- Filtro por Zona -->
+                <div class="flex items-center gap-1.5 bg-slate-900 p-1.5 rounded-xl border border-slate-800 text-xs font-semibold">
+                    <button onclick="filterZone('all')" id="zone-btn-all" class="px-3.5 py-1.5 rounded-lg bg-pink-600 text-white transition">Todo el Salón</button>
+                    <button onclick="filterZone('Salon')" id="zone-btn-Salon" class="px-3.5 py-1.5 rounded-lg text-slate-400 hover:text-white transition">Salón Principal</button>
+                    <button onclick="filterZone('Terraza')" id="zone-btn-Terraza" class="px-3.5 py-1.5 rounded-lg text-slate-400 hover:text-white transition">Terraza</button>
+                    <button onclick="filterZone('VIP')" id="zone-btn-VIP" class="px-3.5 py-1.5 rounded-lg text-slate-400 hover:text-white transition">Zona VIP</button>
                 </div>
             </div>
 
             <!-- Leyenda de Estados -->
-            <div class="flex flex-wrap gap-4 text-xs font-medium bg-slate-900/60 p-3 rounded-xl border border-slate-800/80">
-                <div class="flex items-center gap-2"><span class="w-3 h-3 rounded-full bg-emerald-500 shadow-sm shadow-emerald-500/50"></span> Libre</div>
-                <div class="flex items-center gap-2"><span class="w-3 h-3 rounded-full bg-rose-500 shadow-sm shadow-rose-500/50"></span> Ocupada</div>
-                <div class="flex items-center gap-2"><span class="w-3 h-3 rounded-full bg-amber-500 shadow-sm shadow-amber-500/50"></span> Por Cobrar</div>
-                <div class="flex items-center gap-2"><span class="w-3 h-3 rounded-full bg-blue-500 shadow-sm shadow-blue-500/50"></span> Reservada</div>
+            <div class="flex flex-wrap items-center gap-5 text-xs font-medium bg-slate-900/60 px-5 py-3 rounded-2xl border border-slate-800">
+                <span class="text-slate-400 font-bold uppercase tracking-wider text-[10px]">Estados:</span>
+                <div class="flex items-center gap-2"><span class="w-3 h-3 rounded-full bg-emerald-500 shadow-sm shadow-emerald-500/50"></span><span class="text-slate-300">Libre</span></div>
+                <div class="flex items-center gap-2"><span class="w-3 h-3 rounded-full bg-rose-500 shadow-sm shadow-rose-500/50"></span><span class="text-slate-300">Ocupada</span></div>
+                <div class="flex items-center gap-2"><span class="w-3 h-3 rounded-full bg-amber-500 shadow-sm shadow-amber-500/50"></span><span class="text-slate-300">Por Cobrar</span></div>
+                <div class="flex items-center gap-2"><span class="w-3 h-3 rounded-full bg-blue-500 shadow-sm shadow-blue-500/50"></span><span class="text-slate-300">Reservada</span></div>
             </div>
 
             <!-- Grid de Mesas -->
-            <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4" id="tables-grid"></div>
+            <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-5" id="tables-grid"></div>
         </div>
 
         <!-- 2. SECCIÓN DE COCINA (KDS) -->
         <div id="tab-kds" class="space-y-6 hidden">
             <div class="flex items-center justify-between">
                 <div>
-                    <h2 class="text-2xl font-bold tracking-tight text-white">Pantalla KDS - Cocina</h2>
-                    <p class="text-sm text-slate-400">Comandas en tiempo real enviadas desde los comanderos.</p>
+                    <h2 class="text-2xl font-bold tracking-tight text-white">Comandera Digital de Cocina (KDS)</h2>
+                    <p class="text-sm text-slate-400">Control de órdenes enviadas por los meseros en tiempo real.</p>
                 </div>
-                <div class="flex gap-2">
-                    <span class="px-3 py-1.5 bg-rose-500/20 text-rose-400 border border-rose-500/30 rounded-xl text-xs font-bold flex items-center gap-2">
-                        <i class="fa-solid fa-clock"></i> 3 Pendientes
-                    </span>
-                </div>
+                <button onclick="showToast('KDS Sincronizado', 'info')" class="bg-slate-900 hover:bg-slate-800 border border-slate-800 text-slate-300 px-4 py-2 rounded-xl text-xs font-semibold transition flex items-center gap-2">
+                    <i class="fa-solid fa-rotate"></i> Actualizar
+                </button>
             </div>
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5" id="kds-grid"></div>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="kds-grid"></div>
         </div>
 
         <!-- 3. SECCIÓN DE CAJA / COBRO Y MÉTODOS DE PAGO -->
         <div id="tab-cashier" class="space-y-6 hidden">
-            <!-- Cabecera de Caja -->
             <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
                 <div>
                     <h2 class="text-2xl font-bold tracking-tight text-white">Caja y Cobros</h2>
                     <p class="text-sm text-slate-400">Gestiona las cuentas abiertas, facturación y medios de pago.</p>
                 </div>
                 <div class="flex items-center gap-3">
-                    <button class="bg-slate-800 hover:bg-slate-700 text-slate-200 px-4 py-2.5 rounded-xl text-xs font-semibold transition border border-slate-700 flex items-center gap-2">
+                    <button onclick="showToast('Cierre de turno exportado', 'info')" class="bg-slate-800 hover:bg-slate-700 text-slate-200 px-4 py-2.5 rounded-xl text-xs font-semibold transition border border-slate-700 flex items-center gap-2">
                         <i class="fa-solid fa-file-invoice"></i> Historial
                     </button>
-                    <button class="bg-pink-600 hover:bg-pink-500 text-white px-4 py-2.5 rounded-xl text-xs font-semibold transition shadow-lg shadow-pink-600/20 flex items-center gap-2">
+                    <button onclick="showToast('Caja arqueada: $284,500', 'success')" class="bg-pink-600 hover:bg-pink-500 text-white px-4 py-2.5 rounded-xl text-xs font-semibold transition shadow-lg shadow-pink-600/20 flex items-center gap-2">
                         <i class="fa-solid fa-cash-register"></i> Cierre de Caja
                     </button>
                 </div>
             </div>
 
-            <!-- Layout Dividido (Lista Cuentas vs Detalle Cobro) -->
+            <!-- Layout Dividido -->
             <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
                 <!-- Columna Izquierda: Cuentas por cobrar -->
                 <div class="lg:col-span-4 flex flex-col bg-slate-900 border border-slate-800 rounded-2xl shadow-lg h-[calc(100vh-14rem)]">
@@ -148,87 +172,81 @@
                             <input type="text" placeholder="Buscar mesa o cliente..." class="w-full bg-slate-950 border border-slate-800 rounded-xl pl-9 pr-4 py-2 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-pink-500 transition">
                         </div>
                         <div class="flex gap-2 mt-3 overflow-x-auto custom-scrollbar pb-1">
-                            <button class="px-3 py-1 bg-blue-500/20 text-blue-400 border border-blue-500/30 rounded-lg text-[10px] font-bold whitespace-nowrap">Todas (3)</button>
-                            <button class="px-3 py-1 bg-slate-950 text-slate-400 border border-slate-800 rounded-lg text-[10px] font-bold whitespace-nowrap hover:text-white transition">Mostrador (1)</button>
-                            <button class="px-3 py-1 bg-slate-950 text-slate-400 border border-slate-800 rounded-lg text-[10px] font-bold whitespace-nowrap hover:text-white transition">Delivery (0)</button>
+                            <button class="px-3 py-1 bg-blue-500/20 text-blue-400 border border-blue-500/30 rounded-lg text-[10px] font-bold whitespace-nowrap">Pendientes</button>
+                            <button class="px-3 py-1 bg-slate-950 text-slate-400 border border-slate-800 rounded-lg text-[10px] font-bold whitespace-nowrap hover:text-white transition">Mostrador</button>
                         </div>
                     </div>
-                    <!-- Lista inyectada por JS -->
                     <div class="flex-1 overflow-y-auto custom-scrollbar p-3 space-y-2" id="unpaid-accounts-list"></div>
                 </div>
 
                 <!-- Columna Derecha: Panel de Checkout -->
                 <div class="lg:col-span-8 flex flex-col bg-slate-900 border border-slate-800 rounded-2xl shadow-lg h-[calc(100vh-14rem)]">
-                    <!-- Info Superior Mesa Activa -->
                     <div class="p-5 border-b border-slate-800 flex justify-between items-center bg-slate-900/50 rounded-t-2xl">
                         <div>
                             <h3 class="text-lg font-bold text-white flex items-center gap-2">
-                                Cobrando: <span class="text-pink-400" id="active-checkout-title">Mesa 04</span>
+                                Cobrando: <span class="text-pink-400" id="active-checkout-title">Seleccione una Mesa</span>
                             </h3>
-                            <p class="text-xs text-slate-400 mt-1" id="active-checkout-subtitle"><i class="fa-regular fa-user mr-1"></i> Camarero: Marcos | <i class="fa-regular fa-clock ml-2 mr-1"></i> 1h 15m</p>
+                            <p class="text-xs text-slate-400 mt-1" id="active-checkout-subtitle"><i class="fa-regular fa-user mr-1"></i> Mozo: Gustavo | <i class="fa-regular fa-clock ml-2 mr-1"></i> Estado Activo</p>
                         </div>
                         <div class="text-right">
                             <span class="block text-xs text-slate-400 font-medium">Total a Pagar</span>
-                            <span class="text-3xl font-black text-white" id="active-checkout-total">$8,450.00</span>
+                            <span class="text-3xl font-black text-white" id="active-checkout-total">$0.00</span>
                         </div>
                     </div>
 
                     <div class="flex-1 flex flex-col lg:flex-row overflow-hidden">
-                        <!-- Lista de productos del ticket -->
                         <div class="w-full lg:w-1/2 border-r border-slate-800 flex flex-col bg-slate-950/30">
                             <div class="p-3 bg-slate-950/80 border-b border-slate-800 text-[10px] font-bold text-slate-400 uppercase tracking-wider flex justify-between px-5">
                                 <span>Detalle de Consumo</span>
                                 <span>Importe</span>
                             </div>
-                            <!-- Items inyectados por JS -->
-                            <div class="flex-1 overflow-y-auto custom-scrollbar p-2 space-y-1" id="checkout-items-list"></div>
+                            <div class="flex-1 overflow-y-auto custom-scrollbar p-2 space-y-1" id="checkout-items-list">
+                                <div class="p-8 text-center text-xs text-slate-500 italic">No hay mesa seleccionada para cobro</div>
+                            </div>
                         </div>
 
-                        <!-- Panel interaccíon: Medios de pago y propina -->
                         <div class="w-full lg:w-1/2 p-5 flex flex-col justify-between overflow-y-auto custom-scrollbar">
                             <div class="space-y-5">
-                                <!-- Descuentos y Propinas -->
                                 <div class="grid grid-cols-2 gap-4">
                                     <div>
                                         <label class="text-[10px] uppercase font-bold text-slate-500 mb-1.5 block">Descuento (%)</label>
-                                        <input type="number" placeholder="Ej: 10" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-3 py-2 text-sm text-white focus:outline-none focus:border-pink-500 transition">
+                                        <input type="number" id="checkout-discount" oninput="recalculateCheckout()" placeholder="0" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-3 py-2 text-sm text-white focus:outline-none focus:border-pink-500 transition">
                                     </div>
                                     <div>
                                         <label class="text-[10px] uppercase font-bold text-slate-500 mb-1.5 block">Propina sugerida</label>
                                         <div class="flex gap-2">
-                                            <button class="flex-1 bg-slate-950 border border-slate-800 hover:border-pink-500 text-slate-300 hover:text-pink-400 rounded-xl py-2 text-xs font-bold transition">10%</button>
-                                            <button class="flex-1 bg-slate-950 border border-slate-800 hover:border-pink-500 text-slate-300 hover:text-pink-400 rounded-xl py-2 text-xs font-bold transition">15%</button>
+                                            <button onclick="applyTip(10)" class="flex-1 bg-slate-950 border border-slate-800 hover:border-pink-500 text-slate-300 hover:text-pink-400 rounded-xl py-2 text-xs font-bold transition">10%</button>
+                                            <button onclick="applyTip(15)" class="flex-1 bg-slate-950 border border-slate-800 hover:border-pink-500 text-slate-300 hover:text-pink-400 rounded-xl py-2 text-xs font-bold transition">15%</button>
                                         </div>
                                     </div>
                                 </div>
 
-                                <!-- Métodos de Pago -->
                                 <div>
                                     <label class="text-[10px] uppercase font-bold text-slate-500 mb-2 block">Medio de Pago</label>
                                     <div class="grid grid-cols-2 gap-3">
                                         <label class="cursor-pointer">
-                                            <input type="radio" name="payment_method" class="peer sr-only" checked>
+                                            <input type="radio" name="payment_method" value="Efectivo" class="peer sr-only" checked>
                                             <div class="p-3 rounded-xl border border-slate-800 bg-slate-950 peer-checked:border-pink-500 peer-checked:bg-pink-500/10 hover:border-slate-700 transition flex items-center gap-3">
                                                 <i class="fa-solid fa-money-bill-wave text-amber-400 text-lg"></i>
                                                 <span class="text-xs font-bold text-slate-200">Efectivo</span>
                                             </div>
                                         </label>
                                         <label class="cursor-pointer">
-                                            <input type="radio" name="payment_method" class="peer sr-only">
+                                            <input type="radio" name="payment_method" value="Tarjeta POS" class="peer sr-only">
                                             <div class="p-3 rounded-xl border border-slate-800 bg-slate-950 peer-checked:border-pink-500 peer-checked:bg-pink-500/10 hover:border-slate-700 transition flex items-center gap-3">
                                                 <i class="fa-solid fa-credit-card text-blue-400 text-lg"></i>
                                                 <span class="text-xs font-bold text-slate-200">Tarjeta POS</span>
                                             </div>
                                         </label>
                                         <label class="cursor-pointer">
-                                            <input type="radio" name="payment_method" class="peer sr-only">
+                                            <input type="radio" name="payment_method" value="Mercado Pago" class="peer sr-only">
                                             <div class="p-3 rounded-xl border border-slate-800 bg-slate-950 peer-checked:border-pink-500 peer-checked:bg-pink-500/10 hover:border-slate-700 transition flex items-center gap-3">
                                                 <i class="fa-solid fa-qrcode text-emerald-400 text-lg"></i>
                                                 <span class="text-xs font-bold text-slate-200">Mercado Pago</span>
                                             </div>
                                         </label>
                                         <label class="cursor-pointer">
-                                            <input type="radio" name="payment_method" class="peer sr-only">
+                                            <input type="radio" name="payment_method" value="Transferencia" class="peer sr-only">
                                             <div class="p-3 rounded-xl border border-slate-800 bg-slate-950 peer-checked:border-pink-500 peer-checked:bg-pink-500/10 hover:border-slate-700 transition flex items-center gap-3">
                                                 <i class="fa-solid fa-building-columns text-purple-400 text-lg"></i>
                                                 <span class="text-xs font-bold text-slate-200">Transferencia</span>
@@ -239,10 +257,10 @@
                             </div>
 
                             <div class="mt-6 pt-5 border-t border-slate-800 space-y-3">
-                                <button onclick="showToast('Pago procesado correctamente. Imprimiendo ticket...', 'success')" class="w-full bg-emerald-600 hover:bg-emerald-500 text-white py-3.5 rounded-xl font-bold text-sm transition flex items-center justify-center gap-2 shadow-lg shadow-emerald-600/20">
+                                <button onclick="confirmCheckout()" class="w-full bg-emerald-600 hover:bg-emerald-500 text-white py-3.5 rounded-xl font-bold text-sm transition flex items-center justify-center gap-2 shadow-lg shadow-emerald-600/20">
                                     <i class="fa-solid fa-check-double"></i> Confirmar Cobro
                                 </button>
-                                <button class="w-full bg-slate-800 hover:bg-slate-700 text-slate-300 py-2.5 rounded-xl font-semibold text-xs transition border border-slate-700">
+                                <button onclick="showToast('Imprimiendo pre-cuenta en comanderas...', 'info')" class="w-full bg-slate-800 hover:bg-slate-700 text-slate-300 py-2.5 rounded-xl font-semibold text-xs transition border border-slate-700">
                                     Imprimir Pre-cuenta
                                 </button>
                             </div>
@@ -252,65 +270,726 @@
             </div>
         </div>
 
-        <!-- 4. SECCIÓN DE INVENTARIO Y STOCK -->
+        <!-- 4. SECCIÓN DE STOCK E INVENTARIO -->
         <div id="tab-stock" class="space-y-6 hidden">
             <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
                 <div>
-                    <h2 class="text-2xl font-bold tracking-tight text-white">Stock e Inventario de Insumos</h2>
-                    <p class="text-sm text-slate-400">Control de materia prima, bebidas e insumos críticos para la cocina.</p>
+                    <h2 class="text-2xl font-bold tracking-tight text-white">Control de Stock e Inventario</h2>
+                    <p class="text-sm text-slate-400">Control de insumos de cocina, ingredientes y bebidas en almacén.</p>
                 </div>
-                <button onclick="showToast('Formulario de ingreso de stock simulado', 'info')" class="bg-pink-600 hover:bg-pink-500 text-white px-4 py-2.5 rounded-xl text-xs font-semibold transition flex items-center gap-2">
-                    <i class="fa-solid fa-plus"></i> Registrar Ingreso
+                <button onclick="showToast('Formulario de ingreso habilitado', 'info')" class="bg-pink-600 hover:bg-pink-500 text-white px-4 py-2.5 rounded-xl text-xs font-semibold transition flex items-center gap-2 shadow-lg shadow-pink-600/20">
+                    <i class="fa-solid fa-plus"></i> Registrar Insumo
                 </button>
             </div>
 
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-                <div class="bg-slate-900 border border-slate-800 rounded-2xl p-4 flex items-center gap-4">
-                    <div class="w-12 h-12 rounded-xl bg-emerald-500/10 text-emerald-400 flex items-center justify-center text-xl">
+            <!-- KPIs de Inventario -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
+                <div class="bg-slate-900 border border-slate-800 rounded-2xl p-5 flex items-center gap-4 shadow-lg">
+                    <div class="w-12 h-12 rounded-xl bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 flex items-center justify-center text-xl">
                         <i class="fa-solid fa-boxes-stacked"></i>
                     </div>
                     <div>
-                        <span class="text-xs text-slate-400">Total Insumos</span>
-                        <h4 class="text-xl font-bold text-white">128 Items</h4>
+                        <span class="text-xs text-slate-400 font-medium">Total de Insumos</span>
+                        <h4 class="text-2xl font-black text-white">124 Items</h4>
                     </div>
                 </div>
-                <div class="bg-slate-900 border border-slate-800 rounded-2xl p-4 flex items-center gap-4">
-                    <div class="w-12 h-12 rounded-xl bg-amber-500/10 text-amber-400 flex items-center justify-center text-xl">
+                <div class="bg-slate-900 border border-slate-800 rounded-2xl p-5 flex items-center gap-4 shadow-lg">
+                    <div class="w-12 h-12 rounded-xl bg-rose-500/10 text-rose-400 border border-rose-500/20 flex items-center justify-center text-xl">
                         <i class="fa-solid fa-triangle-exclamation"></i>
                     </div>
                     <div>
-                        <span class="text-xs text-slate-400">Stock Bajo</span>
-                        <h4 class="text-xl font-bold text-amber-400">5 Alertas</h4>
+                        <span class="text-xs text-slate-400 font-medium">Alertas de Reposición</span>
+                        <h4 class="text-2xl font-black text-rose-400">4 En Crítico</h4>
                     </div>
                 </div>
-                <div class="bg-slate-900 border border-slate-800 rounded-2xl p-4 flex items-center gap-4">
-                    <div class="w-12 h-12 rounded-xl bg-pink-500/10 text-pink-400 flex items-center justify-center text-xl">
+                <div class="bg-slate-900 border border-slate-800 rounded-2xl p-5 flex items-center gap-4 shadow-lg">
+                    <div class="w-12 h-12 rounded-xl bg-pink-500/10 text-pink-400 border border-pink-500/20 flex items-center justify-center text-xl">
                         <i class="fa-solid fa-dollar-sign"></i>
                     </div>
                     <div>
-                        <span class="text-xs text-slate-400">Valor en Depósito</span>
-                        <h4 class="text-xl font-bold text-white">$ 1,420,500</h4>
+                        <span class="text-xs text-slate-400 font-medium">Valorización de Stock</span>
+                        <h4 class="text-2xl font-black text-white">$ 1,840,000</h4>
                     </div>
                 </div>
             </div>
 
-            <!-- Tabla de Stock -->
+            <!-- Tabla de Inventario -->
             <div class="bg-slate-900 border border-slate-800 rounded-2xl overflow-hidden shadow-lg">
                 <div class="overflow-x-auto">
                     <table class="w-full text-left text-xs">
-                        <thead class="bg-slate-950 text-slate-400 font-semibold border-b border-slate-800 uppercase text-[10px] tracking-wider">
+                        <thead class="bg-slate-950 text-slate-400 font-bold border-b border-slate-800 uppercase text-[10px] tracking-wider">
                             <tr>
-                                <th class="p-4">Insumo / Producto</th>
+                                <th class="p-4">Insumo</th>
                                 <th class="p-4">Categoría</th>
-                                <th class="p-4">Cantidad Actual</th>
-                                <th class="p-4">Mínimo Requerido</th>
+                                <th class="p-4">Stock Actual</th>
+                                <th class="p-4">Mínimo</th>
                                 <th class="p-4">Estado</th>
-                                <th class="p-4 text-right">Acciones</th>
+                                <th class="p-4 text-right">Acción</th>
                             </tr>
                         </thead>
-                        <tbody class="divide-y divide-slate-800/60 text-slate-2
+                        <tbody class="divide-y divide-slate-800/60 text-slate-200">
+                            <tr class="hover:bg-slate-800/30 transition">
+                                <td class="p-4 font-bold text-white flex items-center gap-3">
+                                    <i class="fa-solid fa-drumstick-bite text-amber-500"></i> Carne Vacuna (Lomo)
+                                </td>
+                                <td class="p-4 text-slate-400">Cocina / Carnes</td>
+                                <td class="p-4 font-bold text-rose-400">3.5 Kg</td>
+                                <td class="p-4 text-slate-400">10.0 Kg</td>
+                                <td class="p-4"><span class="px-2.5 py-1 rounded-full bg-rose-500/20 text-rose-400 border border-rose-500/30 text-[10px] font-bold">Crítico</span></td>
+                                <td class="p-4 text-right"><button onclick="showToast('Solicitud de pedido de Carne generada', 'success')" class="text-pink-400 hover:text-pink-300 font-bold">Reponer</button></td>
+                            </tr>
+                            <tr class="hover:bg-slate-800/30 transition">
+                                <td class="p-4 font-bold text-white flex items-center gap-3">
+                                    <i class="fa-solid fa-beer-mug-empty text-amber-400"></i> Cerveza IPA Artesanal
+                                </td>
+                                <td class="p-4 text-slate-400">Barra / Bebidas</td>
+                                <td class="p-4 font-bold text-emerald-400">48 Unid</td>
+                                <td class="p-4 text-slate-400">15 Unid</td>
+                                <td class="p-4"><span class="px-2.5 py-1 rounded-full bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 text-[10px] font-bold">Óptimo</span></td>
+                                <td class="p-4 text-right"><button onclick="showToast('Stock verificado', 'info')" class="text-slate-400 hover:text-white font-bold">Ajustar</button></td>
+                            </tr>
+                            <tr class="hover:bg-slate-800/30 transition">
+                                <td class="p-4 font-bold text-white flex items-center gap-3">
+                                    <i class="fa-solid fa-cheese text-yellow-400"></i> Queso Mozzarella
+                                </td>
+                                <td class="p-4 text-slate-400">Cocina / Lácteos</td>
+                                <td class="p-4 font-bold text-amber-400">6.0 Kg</td>
+                                <td class="p-4 text-slate-400">8.0 Kg</td>
+                                <td class="p-4"><span class="px-2.5 py-1 rounded-full bg-amber-500/20 text-amber-400 border border-amber-500/30 text-[10px] font-bold">Bajo</span></td>
+                                <td class="p-4 text-right"><button onclick="showToast('Solicitud enviada a Lácteos', 'success')" class="text-pink-400 hover:text-pink-300 font-bold">Reponer</button></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
 
-        // ... existing functions (tables, kitchen, cashier, toast) ...
+        <!-- 5. MÓDULO DASHBOARD & MÉTRICAS (MULTI-SUCURSAL) -->
+        <div id="tab-dashboard" class="space-y-6 hidden">
+            <!-- Cabecera y Filtros -->
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                <div>
+                    <h2 class="text-2xl font-bold tracking-tight text-white">Rendimiento Corporativo</h2>
+                    <p class="text-sm text-slate-400">Comparativa de facturación entre sucursales en tiempo real.</p>
+                </div>
+                <div class="flex items-center bg-slate-900 border border-slate-800 p-1.5 rounded-xl space-x-1">
+                    <button onclick="setDashboardView('daily')" id="dash-btn-daily" class="px-4 py-1.5 rounded-lg text-xs font-semibold bg-pink-600 text-white transition shadow-sm">Día a Día</button>
+                    <button onclick="setDashboardView('monthly')" id="dash-btn-monthly" class="px-4 py-1.5 rounded-lg text-xs font-semibold text-slate-400 hover:text-white transition">Mes a Mes</button>
+                </div>
+            </div>
+
+            <!-- KPIs Globales vs Sucursales -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+                <div class="bg-slate-900 border border-slate-800 p-5 rounded-2xl space-y-3 shadow-lg relative overflow-hidden">
+                    <div class="absolute top-0 right-0 w-24 h-24 bg-white/5 rounded-full -mr-10 -mt-10 blur-xl"></div>
+                    <div class="flex items-center justify-between text-slate-400 text-xs font-medium relative z-10">
+                        <span>Facturación Global <span id="kpi-period-label">(Hoy)</span></span>
+                        <span class="p-2 rounded-xl bg-slate-800 text-slate-300"><i class="fa-solid fa-globe"></i></span>
+                    </div>
+                    <div class="flex items-baseline justify-between relative z-10">
+                        <span class="text-2xl font-black text-white" id="kpi-total-global">$0</span>
+                    </div>
+                </div>
+
+                <div class="bg-slate-900 border border-pink-500/30 p-5 rounded-2xl space-y-3 shadow-lg shadow-pink-500/5">
+                    <div class="flex items-center justify-between text-slate-400 text-xs font-medium">
+                        <span class="flex items-center gap-2"><span class="w-2.5 h-2.5 rounded-full bg-pink-500"></span> Sucursal Central</span>
+                        <span class="text-xs font-bold text-pink-400" id="kpi-pct-central">0%</span>
+                    </div>
+                    <div class="flex items-baseline justify-between">
+                        <span class="text-xl font-bold text-white" id="kpi-total-central">$0</span>
+                    </div>
+                </div>
+
+                <div class="bg-slate-900 border border-blue-500/30 p-5 rounded-2xl space-y-3 shadow-lg shadow-blue-500/5">
+                    <div class="flex items-center justify-between text-slate-400 text-xs font-medium">
+                        <span class="flex items-center gap-2"><span class="w-2.5 h-2.5 rounded-full bg-blue-500"></span> Sucursal Norte</span>
+                        <span class="text-xs font-bold text-blue-400" id="kpi-pct-norte">0%</span>
+                    </div>
+                    <div class="flex items-baseline justify-between">
+                        <span class="text-xl font-bold text-white" id="kpi-total-norte">$0</span>
+                    </div>
+                </div>
+
+                <div class="bg-slate-900 border border-emerald-500/30 p-5 rounded-2xl space-y-3 shadow-lg shadow-emerald-500/5">
+                    <div class="flex items-center justify-between text-slate-400 text-xs font-medium">
+                        <span class="flex items-center gap-2"><span class="w-2.5 h-2.5 rounded-full bg-emerald-500"></span> Sucursal Sur</span>
+                        <span class="text-xs font-bold text-emerald-400" id="kpi-pct-sur">0%</span>
+                    </div>
+                    <div class="flex items-baseline justify-between">
+                        <span class="text-xl font-bold text-white" id="kpi-total-sur">$0</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Gráfico Comparativo de Barras -->
+            <div class="bg-slate-900 border border-slate-800 p-6 rounded-2xl space-y-6 shadow-lg">
+                <div class="flex justify-between items-center">
+                    <h3 class="font-bold text-sm text-white" id="chart-title">Comparativa de Facturación</h3>
+                    <div class="flex items-center gap-4 text-xs font-medium text-slate-400">
+                        <div class="flex items-center gap-1.5"><span class="w-3 h-3 rounded bg-pink-500"></span> Central</div>
+                        <div class="flex items-center gap-1.5"><span class="w-3 h-3 rounded bg-blue-500"></span> Norte</div>
+                        <div class="flex items-center gap-1.5"><span class="w-3 h-3 rounded bg-emerald-500"></span> Sur</div>
+                    </div>
+                </div>
+                
+                <div class="h-64 flex items-end justify-between gap-2 sm:gap-6 pt-6 border-b border-slate-800 pb-2 px-2" id="dashboard-chart-container"></div>
+            </div>
+
+            <!-- Tabla Detallada -->
+            <div class="bg-slate-900 border border-slate-800 rounded-2xl overflow-hidden shadow-lg">
+                <div class="p-4 border-b border-slate-800 flex justify-between items-center bg-slate-950/50">
+                    <h3 class="font-bold text-sm text-white">Desglose por Período</h3>
+                    <button onclick="exportCSV()" class="text-xs text-pink-400 hover:text-pink-300 font-semibold transition flex items-center gap-1">
+                        <i class="fa-solid fa-file-export"></i> Exportar CSV
+                    </button>
+                </div>
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left text-xs text-slate-300">
+                        <thead class="bg-slate-950/80 uppercase text-[10px] text-slate-400 border-b border-slate-800 font-bold tracking-wider">
+                            <tr>
+                                <th class="p-4" id="table-header-period">Fecha</th>
+                                <th class="p-4 text-right">Central</th>
+                                <th class="p-4 text-right">Norte</th>
+                                <th class="p-4 text-right">Sur</th>
+                                <th class="p-4 text-right text-white">Total Global</th>
+                            </tr>
+                        </thead>
+                        <tbody id="dashboard-table-body" class="divide-y divide-slate-800/60"></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- MODAL DE COMANDERO TÁCTIL (AL HACER CLIC EN UNA MESA) -->
+    <div id="table-modal" class="fixed inset-0 bg-slate-950/80 backdrop-blur-md z-50 flex items-center justify-center p-4 hidden">
+        <div class="bg-slate-900 border border-slate-800 rounded-3xl w-full max-w-4xl h-[88vh] flex flex-col overflow-hidden shadow-2xl">
+            <div class="px-6 py-4 bg-slate-900 border-b border-slate-800 flex items-center justify-between shrink-0">
+                <div class="flex items-center space-x-3">
+                    <div class="w-10 h-10 rounded-xl bg-pink-500/20 border border-pink-500/30 flex items-center justify-center text-pink-400 font-bold" id="modal-table-num">
+                        01
+                    </div>
+                    <div>
+                        <h3 class="font-bold text-white text-base" id="modal-table-title">Mesa 01</h3>
+                        <p class="text-xs text-slate-400" id="modal-table-status">Estado: Libre</p>
+                    </div>
+                </div>
+                <button onclick="closeTableModal()" class="w-9 h-9 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white transition flex items-center justify-center">
+                    <i class="fa-solid fa-xmark text-lg"></i>
+                </button>
+            </div>
+
+            <div class="flex-1 flex flex-col md:flex-row overflow-hidden">
+                <div class="flex-1 p-5 overflow-y-auto custom-scrollbar space-y-4 border-r border-slate-800">
+                    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+                        <h4 class="text-xs font-bold uppercase tracking-wider text-slate-400">Catálogo Comandero</h4>
+                        <div class="flex flex-wrap gap-1.5 text-xs">
+                            <button onclick="filterModalCat('all')" class="modal-cat-btn px-3 py-1 rounded-lg bg-pink-600 text-white font-semibold transition">Todos</button>
+                            <button onclick="filterModalCat('Burgers')" class="modal-cat-btn px-3 py-1 rounded-lg bg-slate-800 text-slate-300 hover:text-white transition">Platos</button>
+                            <button onclick="filterModalCat('Bebidas')" class="modal-cat-btn px-3 py-1 rounded-lg bg-slate-800 text-slate-300 hover:text-white transition">Bebidas</button>
+                        </div>
+                    </div>
+                    <div class="grid grid-cols-2 sm:grid-cols-3 gap-3" id="modal-products-grid"></div>
+                </div>
+
+                <div class="w-full md:w-80 p-5 bg-slate-950/60 flex flex-col justify-between shrink-0">
+                    <div class="space-y-4">
+                        <div class="flex items-center justify-between border-b border-slate-800 pb-3">
+                            <h4 class="font-bold text-sm text-white flex items-center gap-2">
+                                <i class="fa-solid fa-receipt text-pink-400"></i> Comanda Actual
+                            </h4>
+                            <button onclick="clearCurrentOrder()" class="text-xs text-rose-400 hover:text-rose-300 transition">Vaciar</button>
+                        </div>
+                        <div class="space-y-2.5 max-h-56 overflow-y-auto custom-scrollbar pr-1" id="modal-order-items"></div>
+                    </div>
+
+                    <div class="pt-4 border-t border-slate-800 space-y-4">
+                        <div class="flex justify-between items-center text-sm font-extrabold text-white">
+                            <span>Total</span>
+                            <span class="text-pink-400 text-lg" id="modal-total">$0.00</span>
+                        </div>
+                        <div class="grid grid-cols-2 gap-3">
+                            <button onclick="sendOrderToKitchen()" class="bg-slate-800 hover:bg-slate-700 text-slate-200 py-3 rounded-xl font-bold text-xs transition flex items-center justify-center gap-1.5">
+                                <i class="fa-solid fa-fire text-amber-400"></i> A Cocina
+                            </button>
+                            <button onclick="checkoutActiveTable()" class="bg-emerald-600 hover:bg-emerald-500 text-white py-3 rounded-xl font-bold text-xs transition shadow-lg shadow-emerald-600/20 flex items-center justify-center gap-1.5">
+                                <i class="fa-solid fa-cash-register"></i> Cobrar
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- JAVASCRIPT APPLICATION LOGIC -->
+    <script>
+        // MOCK DATABASE & STATE
+        const tablesData = [
+            { id: 1, name: "Mesa 01", zone: "Salon", status: "free", capacity: 4, order: [] },
+            { id: 2, name: "Mesa 02", zone: "Salon", status: "occupied", capacity: 2, order: [{id: 1, name: "Burger Doble Cheddar", price: 12.50, qty: 2}, {id: 3, name: "Cerveza IPA", price: 5.00, qty: 2}] },
+            { id: 3, name: "Mesa 03", zone: "Salon", status: "occupied", capacity: 6, order: [{id: 2, name: "Pizza Margarita", price: 15.00, qty: 1}] },
+            { id: 4, name: "Mesa 04", zone: "Terraza", status: "topay", capacity: 4, order: [{id: 4, name: "Milanesa Lomo", price: 14.00, qty: 2}] },
+            { id: 5, name: "Mesa 05", zone: "VIP", status: "reserved", capacity: 8, order: [] }
+        ];
+
+        const productsData = [
+            { id: 1, name: "Burger Doble Cheddar", category: "Burgers", price: 12.50 },
+            { id: 2, name: "Pizza Margarita", category: "Burgers", price: 15.00 },
+            { id: 3, name: "Cerveza IPA Artesanal", category: "Bebidas", price: 5.00 },
+            { id: 4, name: "Milanesa Lomo c/ Papas", category: "Burgers", price: 14.00 },
+            { id: 5, name: "Limonada Menta Jengibre", category: "Bebidas", price: 4.00 }
+        ];
+
+        const kdsOrders = [
+            { id: "CMD-101", table: "Mesa 02", time: "12 min", items: ["2x Burger Doble Cheddar", "2x Cerveza IPA"], status: "pending" },
+            { id: "CMD-102", table: "Mesa 03", time: "5 min", items: ["1x Pizza Margarita"], status: "pending" }
+        ];
+
+        // DASHBOARD DATA
+        const dashDataDaily = {
+            periodLabel: "(Hoy)",
+            title: "Comparativa de Facturación Diaria por Sucursal",
+            headerPeriod: "Hora / Período",
+            labels: ["12:00", "14:00", "16:00", "18:00", "20:00", "22:00"],
+            central: [150, 420, 200, 180, 650, 890],
+            norte: [120, 310, 150, 140, 480, 620],
+            sur: [90, 250, 110, 95, 390, 510]
+        };
+
+        const dashDataMonthly = {
+            periodLabel: "(Mes Actual)",
+            title: "Comparativa de Facturación Mensual por Sucursal",
+            headerPeriod: "Mes",
+            labels: ["Ene", "Feb", "Mar", "Abr", "May", "Jun"],
+            central: [12500, 14200, 13800, 15900, 16800, 18400],
+            norte: [9800, 11000, 10500, 12100, 12900, 14100],
+            sur: [7500, 8900, 8200, 9600, 10200, 11500]
+        };
+
+        let currentDashView = 'daily';
+        let currentZoneFilter = 'all';
+        let currentModalTableId = null;
+        let selectedCashierTableId = null;
+        let currentTipPct = 0;
+
+        // INIT
+        window.onload = function() {
+            renderTables();
+            renderKDS();
+            renderCashierAccounts();
+            setDashboardView('daily');
+        };
+
+        // TAB SWITCHER
+        function switchTab(tabId) {
+            ['tables', 'kds', 'cashier', 'stock', 'dashboard'].forEach(t => {
+                document.getElementById(`tab-${t}`).classList.add('hidden');
+                const btn = document.getElementById(`nav-${t}`);
+                if(btn) {
+                    btn.className = "nav-btn w-full flex items-center gap-3 px-3.5 py-3 rounded-xl text-xs font-bold transition text-slate-400 hover:text-white hover:bg-slate-800/60";
+                }
+            });
+
+            document.getElementById(`tab-${tabId}`).classList.remove('hidden');
+            const activeBtn = document.getElementById(`nav-${tabId}`);
+            if(activeBtn) {
+                activeBtn.className = "nav-btn w-full flex items-center gap-3 px-3.5 py-3 rounded-xl text-xs font-bold transition bg-pink-600 text-white shadow-lg shadow-pink-600/20";
+            }
+        }
+
+        // SALÓN Y MESAS LOGIC
+        function renderTables() {
+            const grid = document.getElementById('tables-grid');
+            grid.innerHTML = '';
+
+            const filtered = currentZoneFilter === 'all' ? tablesData : tablesData.filter(t => t.zone === currentZoneFilter);
+
+            filtered.forEach(table => {
+                let statusColor = 'bg-emerald-500/10 border-emerald-500/30 text-emerald-400';
+                let statusText = 'Libre';
+                let dotColor = 'bg-emerald-500';
+
+                if(table.status === 'occupied') {
+                    statusColor = 'bg-rose-500/10 border-rose-500/30 text-rose-400';
+                    statusText = 'Ocupada';
+                    dotColor = 'bg-rose-500';
+                } else if(table.status === 'topay') {
+                    statusColor = 'bg-amber-500/10 border-amber-500/30 text-amber-400';
+                    statusText = 'Por Cobrar';
+                    dotColor = 'bg-amber-500';
+                } else if(table.status === 'reserved') {
+                    statusColor = 'bg-blue-500/10 border-blue-500/30 text-blue-400';
+                    statusText = 'Reservada';
+                    dotColor = 'bg-blue-500';
+                }
+
+                const total = table.order.reduce((acc, i) => acc + (i.price * i.qty), 0);
+
+                const card = document.createElement('div');
+                card.className = `bg-slate-900 border ${statusColor.split(' ')[1]} rounded-2xl p-4 flex flex-col justify-between hover:scale-[1.02] transition cursor-pointer shadow-lg relative h-36`;
+                card.onclick = () => openTableModal(table.id);
+                card.innerHTML = `
+                    <div class="flex justify-between items-start">
+                        <span class="text-xs font-bold text-white">${table.name}</span>
+                        <span class="text-[10px] text-slate-400">${table.zone}</span>
+                    </div>
+                    <div>
+                        <div class="flex items-center gap-1.5 text-xs font-bold">
+                            <span class="w-2 h-2 rounded-full ${dotColor}"></span>
+                            <span class="${statusColor.split(' ')[2]}">${statusText}</span>
+                        </div>
+                        <span class="text-xs text-slate-400">${table.order.length} items</span>
+                    </div>
+                    <div class="pt-2 border-t border-slate-800/80 flex justify-between text-xs">
+                        <span class="text-slate-500">Total</span>
+                        <span class="font-extrabold text-pink-400">$${total.toFixed(2)}</span>
+                    </div>
+                `;
+                grid.appendChild(card);
+            });
+        }
+
+        function filterZone(zone) {
+            currentZoneFilter = zone;
+            ['all', 'Salon', 'Terraza', 'VIP'].forEach(z => {
+                const btn = document.getElementById(`zone-btn-${z}`);
+                if(btn) {
+                    btn.className = z === zone 
+                        ? "px-3.5 py-1.5 rounded-lg bg-pink-600 text-white transition"
+                        : "px-3.5 py-1.5 rounded-lg text-slate-400 hover:text-white transition";
+                }
+            });
+            renderTables();
+        }
+
+        // COMANDERO MODAL LOGIC
+        function openTableModal(id) {
+            currentModalTableId = id;
+            const table = tablesData.find(t => t.id === id);
+            document.getElementById('modal-table-num').innerText = table.id < 10 ? `0${table.id}` : table.id;
+            document.getElementById('modal-table-title').innerText = `${table.name} (${table.zone})`;
+            document.getElementById('modal-table-status').innerText = `Estado: ${table.status.toUpperCase()}`;
+
+            renderModalProducts();
+            renderModalOrder();
+            document.getElementById('table-modal').classList.remove('hidden');
+        }
+
+        function closeTableModal() {
+            document.getElementById('table-modal').classList.add('hidden');
+            renderTables();
+        }
+
+        function renderModalProducts() {
+            const grid = document.getElementById('modal-products-grid');
+            grid.innerHTML = '';
+            productsData.forEach(p => {
+                const item = document.createElement('div');
+                item.className = "bg-slate-950 border border-slate-800 rounded-xl p-3 flex flex-col justify-between hover:border-pink-500 cursor-pointer transition";
+                item.onclick = () => {
+                    const table = tablesData.find(t => t.id === currentModalTableId);
+                    if(table.status === 'free') table.status = 'occupied';
+                    const ex = table.order.find(i => i.id === p.id);
+                    if(ex) ex.qty += 1;
+                    else table.order.push({ id: p.id, name: p.name, price: p.price, qty: 1 });
+                    renderModalOrder();
+                };
+                item.innerHTML = `
+                    <h5 class="text-xs font-bold text-white">${p.name}</h5>
+                    <span class="text-xs font-black text-pink-400 mt-2">$${p.price.toFixed(2)}</span>
+                `;
+                grid.appendChild(item);
+            });
+        }
+
+        function renderModalOrder() {
+            const container = document.getElementById('modal-order-items');
+            const table = tablesData.find(t => t.id === currentModalTableId);
+            container.innerHTML = '';
+
+            let total = 0;
+            table.order.forEach((item, idx) => {
+                total += item.price * item.qty;
+                const row = document.createElement('div');
+                row.className = "flex items-center justify-between bg-slate-900 border border-slate-800 p-2 rounded-xl text-xs";
+                row.innerHTML = `
+                    <div>
+                        <p class="font-bold text-white">${item.name}</p>
+                        <span class="text-slate-400">$${item.price.toFixed(2)}</span>
+                    </div>
+                    <div class="flex items-center gap-2">
+                        <button onclick="changeQty(${idx}, -1)" class="w-5 h-5 rounded bg-slate-800 text-slate-300">-</button>
+                        <span class="font-bold text-white">${item.qty}</span>
+                        <button onclick="changeQty(${idx}, 1)" class="w-5 h-5 rounded bg-slate-800 text-slate-300">+</button>
+                    </div>
+                `;
+                container.appendChild(row);
+            });
+
+            document.getElementById('modal-total').innerText = `$${total.toFixed(2)}`;
+        }
+
+        function changeQty(idx, delta) {
+            const table = tablesData.find(t => t.id === currentModalTableId);
+            table.order[idx].qty += delta;
+            if(table.order[idx].qty <= 0) table.order.splice(idx, 1);
+            renderModalOrder();
+        }
+
+        function clearCurrentOrder() {
+            const table = tablesData.find(t => t.id === currentModalTableId);
+            table.order = [];
+            table.status = 'free';
+            renderModalOrder();
+        }
+
+        function sendOrderToKitchen() {
+            showToast('Comanda enviada a cocina (KDS)', 'success');
+            closeTableModal();
+        }
+
+        function checkoutActiveTable() {
+            const table = tablesData.find(t => t.id === currentModalTableId);
+            table.status = 'topay';
+            closeTableModal();
+            switchTab('cashier');
+            selectCashierTable(table.id);
+        }
+
+        // KDS LOGIC
+        function renderKDS() {
+            const grid = document.getElementById('kds-grid');
+            grid.innerHTML = '';
+            kdsOrders.forEach((o, index) => {
+                const isReady = o.status === 'ready';
+                const card = document.createElement('div');
+                card.className = `bg-slate-900 border ${isReady ? 'border-emerald-500/40' : 'border-slate-800'} rounded-2xl p-4 flex flex-col justify-between h-56`;
+                card.innerHTML = `
+                    <div>
+                        <div class="flex justify-between items-center pb-2 border-b border-slate-800">
+                            <span class="font-bold text-pink-400 text-xs">${o.id} - ${o.table}</span>
+                            <span class="text-[10px] text-amber-400"><i class="fa-regular fa-clock"></i> ${o.time}</span>
+                        </div>
+                        <ul class="mt-3 space-y-1 text-xs text-slate-300">
+                            ${o.items.map(i => `<li>• ${i}</li>`).join('')}
+                        </ul>
+                    </div>
+                    <button onclick="toggleKDS(${index})" class="w-full py-2 rounded-xl text-xs font-bold transition ${isReady ? 'bg-slate-800 text-slate-300' : 'bg-emerald-600 hover:bg-emerald-500 text-white'}">
+                        ${isReady ? 'Marcar Pendiente' : 'Marcar Listo'}
+                    </button>
+                `;
+                grid.appendChild(card);
+            });
+        }
+
+        function toggleKDS(idx) {
+            kdsOrders[idx].status = kdsOrders[idx].status === 'ready' ? 'pending' : 'ready';
+            renderKDS();
+            showToast('Estado de comanda actualizado en KDS', 'info');
+        }
+
+        // CASHIER LOGIC
+        function renderCashierAccounts() {
+            const list = document.getElementById('unpaid-accounts-list');
+            list.innerHTML = '';
+
+            const unpaid = tablesData.filter(t => t.order.length > 0);
+            if(unpaid.length === 0) {
+                list.innerHTML = `<div class="p-6 text-center text-xs text-slate-500 italic">No hay cuentas pendientes</div>`;
+                return;
+            }
+
+            unpaid.forEach(t => {
+                const total = t.order.reduce((acc, i) => acc + (i.price * i.qty), 0);
+                const item = document.createElement('div');
+                item.className = `p-3 rounded-xl border cursor-pointer transition flex justify-between items-center ${selectedCashierTableId === t.id ? 'bg-pink-500/10 border-pink-500 text-white' : 'bg-slate-950 border-slate-800 text-slate-300 hover:border-slate-700'}`;
+                item.onclick = () => selectCashierTable(t.id);
+                item.innerHTML = `
+                    <div>
+                        <h5 class="font-bold text-xs">${t.name}</h5>
+                        <span class="text-[10px] text-slate-400">${t.order.length} consumos</span>
+                    </div>
+                    <span class="font-extrabold text-pink-400 text-xs">$${total.toFixed(2)}</span>
+                `;
+                list.appendChild(item);
+            });
+        }
+
+        function selectCashierTable(id) {
+            selectedCashierTableId = id;
+            renderCashierAccounts();
+
+            const table = tablesData.find(t => t.id === id);
+            document.getElementById('active-checkout-title').innerText = table.name;
+            
+            const itemsList = document.getElementById('checkout-items-list');
+            itemsList.innerHTML = '';
+            table.order.forEach(item => {
+                const row = document.createElement('div');
+                row.className = "p-2.5 flex justify-between items-center text-xs border-b border-slate-900";
+                row.innerHTML = `
+                    <span class="text-white font-medium">${item.qty}x ${item.name}</span>
+                    <span class="text-pink-300 font-bold">$${(item.price * item.qty).toFixed(2)}</span>
+                `;
+                itemsList.appendChild(row);
+            });
+
+            recalculateCheckout();
+        }
+
+        function applyTip(pct) {
+            currentTipPct = pct;
+            recalculateCheckout();
+            showToast(`Propina del ${pct}% aplicada`, 'info');
+        }
+
+        function recalculateCheckout() {
+            if(!selectedCashierTableId) return;
+            const table = tablesData.find(t => t.id === selectedCashierTableId);
+            const subtotal = table.order.reduce((acc, i) => acc + (i.price * i.qty), 0);
+            
+            const discountVal = parseFloat(document.getElementById('checkout-discount').value) || 0;
+            const afterDiscount = subtotal * (1 - (discountVal / 100));
+            const total = afterDiscount * (1 + (currentTipPct / 100));
+
+            document.getElementById('active-checkout-total').innerText = `$${total.toFixed(2)}`;
+        }
+
+        function confirmCheckout() {
+            if(!selectedCashierTableId) {
+                showToast('Seleccione una mesa primero', 'error');
+                return;
+            }
+            const table = tablesData.find(t => t.id === selectedCashierTableId);
+            const payMethod = document.querySelector('input[name="payment_method"]:checked').value;
+
+            table.order = [];
+            table.status = 'free';
+            selectedCashierTableId = null;
+
+            showToast(`Pago procesado exitosamente mediante ${payMethod}`, 'success');
+            renderCashierAccounts();
+            renderTables();
+
+            document.getElementById('active-checkout-title').innerText = "Seleccione una Mesa";
+            document.getElementById('active-checkout-total').innerText = "$0.00";
+            document.getElementById('checkout-items-list').innerHTML = `<div class="p-8 text-center text-xs text-slate-500 italic">No hay mesa seleccionada para cobro</div>`;
+        }
+
+        // DASHBOARD MULTI-SUCURSAL LOGIC
+        function setDashboardView(viewMode) {
+            currentDashView = viewMode;
+
+            const btnDaily = document.getElementById('dash-btn-daily');
+            const btnMonthly = document.getElementById('dash-btn-monthly');
+
+            if(viewMode === 'daily') {
+                btnDaily.className = "px-4 py-1.5 rounded-lg text-xs font-semibold bg-pink-600 text-white transition shadow-sm";
+                btnMonthly.className = "px-4 py-1.5 rounded-lg text-xs font-semibold text-slate-400 hover:text-white transition";
+            } else {
+                btnMonthly.className = "px-4 py-1.5 rounded-lg text-xs font-semibold bg-pink-600 text-white transition shadow-sm";
+                btnDaily.className = "px-4 py-1.5 rounded-lg text-xs font-semibold text-slate-400 hover:text-white transition";
+            }
+
+            const data = viewMode === 'daily' ? dashDataDaily : dashDataMonthly;
+
+            document.getElementById('kpi-period-label').innerText = data.periodLabel;
+            document.getElementById('chart-title').innerText = data.title;
+            document.getElementById('table-header-period').innerText = data.headerPeriod;
+
+            const sumCentral = data.central.reduce((a, b) => a + b, 0);
+            const sumNorte = data.norte.reduce((a, b) => a + b, 0);
+            const sumSur = data.sur.reduce((a, b) => a + b, 0);
+            const globalTotal = sumCentral + sumNorte + sumSur;
+
+            document.getElementById('kpi-total-global').innerText = `$${globalTotal.toLocaleString()}`;
+            document.getElementById('kpi-total-central').innerText = `$${sumCentral.toLocaleString()}`;
+            document.getElementById('kpi-total-norte').innerText = `$${sumNorte.toLocaleString()}`;
+            document.getElementById('kpi-total-sur').innerText = `$${sumSur.toLocaleString()}`;
+
+            document.getElementById('kpi-pct-central').innerText = `${((sumCentral/globalTotal)*100).toFixed(1)}%`;
+            document.getElementById('kpi-pct-norte').innerText = `${((sumNorte/globalTotal)*100).toFixed(1)}%`;
+            document.getElementById('kpi-pct-sur').innerText = `${((sumSur/globalTotal)*100).toFixed(1)}%`;
+
+            renderDashboardChart(data);
+            renderDashboardTable(data);
+        }
+
+        function renderDashboardChart(data) {
+            const container = document.getElementById('dashboard-chart-container');
+            container.innerHTML = '';
+
+            const maxVal = Math.max(...data.central, ...data.norte, ...data.sur);
+
+            data.labels.forEach((label, idx) => {
+                const valC = data.central[idx];
+                const valN = data.norte[idx];
+                const valS = data.sur[idx];
+
+                const hC = Math.round((valC / maxVal) * 100);
+                const hN = Math.round((valN / maxVal) * 100);
+                const hS = Math.round((valS / maxVal) * 100);
+
+                const group = document.createElement('div');
+                group.className = "flex-1 flex flex-col items-center h-full justify-end gap-1 group";
+                group.innerHTML = `
+                    <div class="w-full flex items-end justify-center gap-1 h-48 px-1">
+                        <div style="height: ${hC}%;" class="w-1/3 bg-pink-500 rounded-t hover:brightness-125 transition" title="Central: $${valC}"></div>
+                        <div style="height: ${hN}%;" class="w-1/3 bg-blue-500 rounded-t hover:brightness-125 transition" title="Norte: $${valN}"></div>
+                        <div style="height: ${hS}%;" class="w-1/3 bg-emerald-500 rounded-t hover:brightness-125 transition" title="Sur: $${valS}"></div>
+                    </div>
+                    <span class="text-[10px] text-slate-400 font-bold mt-2">${label}</span>
+                `;
+                container.appendChild(group);
+            });
+        }
+
+        function renderDashboardTable(data) {
+            const tbody = document.getElementById('dashboard-table-body');
+            tbody.innerHTML = '';
+
+            data.labels.forEach((label, idx) => {
+                const valC = data.central[idx];
+                const valN = data.norte[idx];
+                const valS = data.sur[idx];
+                const rowTotal = valC + valN + valS;
+
+                const tr = document.createElement('tr');
+                tr.className = "hover:bg-slate-800/40 transition";
+                tr.innerHTML = `
+                    <td class="p-4 font-bold text-white">${label}</td>
+                    <td class="p-4 text-right text-pink-400 font-medium">$${valC.toLocaleString()}</td>
+                    <td class="p-4 text-right text-blue-400 font-medium">$${valN.toLocaleString()}</td>
+                    <td class="p-4 text-right text-emerald-400 font-medium">$${valS.toLocaleString()}</td>
+                    <td class="p-4 text-right font-black text-white">$${rowTotal.toLocaleString()}</td>
+                `;
+                tbody.appendChild(tr);
+            });
+        }
+
+        function exportCSV() {
+            showToast('Generando reporte corporativo en formato CSV...', 'success');
+        }
+
+        // TOAST HELPER
+        function showToast(msg, type = 'success') {
+            const toast = document.getElementById('toast');
+            const icon = document.getElementById('toast-icon');
+            const msgEl = document.getElementById('toast-message');
+
+            msgEl.innerText = msg;
+            if(type === 'success') icon.className = "fa-solid fa-circle-check text-emerald-400 text-base";
+            else if(type === 'error') icon.className = "fa-solid fa-circle-exclamation text-rose-400 text-base";
+            else icon.className = "fa-solid fa-circle-info text-sky-400 text-base";
+
+            toast.classList.remove('translate-x-full', 'opacity-0');
+            setTimeout(() => {
+                toast.classList.add('translate-x-full', 'opacity-0');
+            }, 3000);
+        }
     </script>
 </body>
 </html>
