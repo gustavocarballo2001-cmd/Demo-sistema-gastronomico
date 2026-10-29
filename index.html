@@ -15,7 +15,6 @@
                         brand: {
                             500: '#ec4899',
                             600: '#db2777',
-                            700: '#be185d'
                         }
                     }
                 }
@@ -57,12 +56,20 @@
                 </div>
             </div>
 
-            <!-- Menú Principal con los 5 Módulos -->
+            <!-- Menú Principal -->
             <nav class="p-3 space-y-1.5">
                 <div class="text-[10px] uppercase font-bold tracking-wider text-slate-500 px-3 my-2">Módulos Principales</div>
                 
                 <button onclick="switchTab('tables')" id="nav-tables" class="nav-btn w-full flex items-center gap-3 px-3.5 py-3 rounded-xl text-xs font-bold transition bg-pink-600 text-white shadow-lg shadow-pink-600/20">
-                    <i class="fa-solid fa-border-all text-base w-5 text-center"></i> Salón y Mesas
+                    <i class="fa-solid fa-border-all text-base w-5 text-center"></i> Salón
+                </button>
+
+                <button onclick="switchTab('counter')" id="nav-counter" class="nav-btn w-full flex items-center gap-3 px-3.5 py-3 rounded-xl text-xs font-bold transition text-slate-400 hover:text-white hover:bg-slate-800/60">
+                    <i class="fa-solid fa-store text-base w-5 text-center"></i> Mostrador
+                </button>
+
+                <button onclick="switchTab('delivery')" id="nav-delivery" class="nav-btn w-full flex items-center gap-3 px-3.5 py-3 rounded-xl text-xs font-bold transition text-slate-400 hover:text-white hover:bg-slate-800/60">
+                    <i class="fa-solid fa-motorcycle text-base w-5 text-center"></i> Delivery
                 </button>
 
                 <button onclick="switchTab('kds')" id="nav-kds" class="nav-btn w-full flex items-center gap-3 px-3.5 py-3 rounded-xl text-xs font-bold transition text-slate-400 hover:text-white hover:bg-slate-800/60">
@@ -106,15 +113,16 @@
         <div id="tab-tables" class="space-y-6">
             <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
                 <div>
-                    <h2 class="text-2xl font-bold tracking-tight text-white">Plano de Salón y Mesas</h2>
-                    <p class="text-sm text-slate-400">Haz clic en cualquier mesa para abrir el comandero táctil o gestionar consumos.</p>
+                    <h2 class="text-2xl font-bold tracking-tight text-white">Salón</h2>
+                    <p class="text-sm text-slate-400">Hay 4 salones. Elegí uno y hacé clic en la mesa para cargar la comanda.</p>
                 </div>
-                <!-- Filtro por Zona -->
-                <div class="flex items-center gap-1.5 bg-slate-900 p-1.5 rounded-xl border border-slate-800 text-xs font-semibold">
-                    <button onclick="filterZone('all')" id="zone-btn-all" class="px-3.5 py-1.5 rounded-lg bg-pink-600 text-white transition">Todo el Salón</button>
-                    <button onclick="filterZone('Salon')" id="zone-btn-Salon" class="px-3.5 py-1.5 rounded-lg text-slate-400 hover:text-white transition">Salón Principal</button>
-                    <button onclick="filterZone('Terraza')" id="zone-btn-Terraza" class="px-3.5 py-1.5 rounded-lg text-slate-400 hover:text-white transition">Terraza</button>
-                    <button onclick="filterZone('VIP')" id="zone-btn-VIP" class="px-3.5 py-1.5 rounded-lg text-slate-400 hover:text-white transition">Zona VIP</button>
+                <!-- Filtro por los 4 salones -->
+                <div class="flex items-center gap-1.5 bg-slate-900 p-1.5 rounded-xl border border-slate-800 text-xs font-semibold overflow-x-auto custom-scrollbar">
+                    <button onclick="filterZone('all')" id="zone-btn-all" class="px-3.5 py-1.5 rounded-lg bg-pink-600 text-white transition whitespace-nowrap">Todos</button>
+                    <button onclick="filterZone('Salon1')" id="zone-btn-Salon1" class="px-3.5 py-1.5 rounded-lg text-slate-400 hover:text-white transition whitespace-nowrap">Salón 1</button>
+                    <button onclick="filterZone('Salon2')" id="zone-btn-Salon2" class="px-3.5 py-1.5 rounded-lg text-slate-400 hover:text-white transition whitespace-nowrap">Salón 2</button>
+                    <button onclick="filterZone('Salon3')" id="zone-btn-Salon3" class="px-3.5 py-1.5 rounded-lg text-slate-400 hover:text-white transition whitespace-nowrap">Salón 3</button>
+                    <button onclick="filterZone('Salon4')" id="zone-btn-Salon4" class="px-3.5 py-1.5 rounded-lg text-slate-400 hover:text-white transition whitespace-nowrap">Salón 4</button>
                 </div>
             </div>
 
@@ -131,12 +139,40 @@
             <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-5" id="tables-grid"></div>
         </div>
 
+        <!-- 1b. MOSTRADOR -->
+        <div id="tab-counter" class="space-y-6 hidden">
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                <div>
+                    <h2 class="text-2xl font-bold tracking-tight text-white">Mostrador</h2>
+                    <p class="text-sm text-slate-400">Pedidos para llevar. Ingresá el nombre del cliente al abrir la comanda.</p>
+                </div>
+                <button onclick="createCounterOrder()" class="bg-pink-600 hover:bg-pink-500 text-white px-4 py-2.5 rounded-xl text-xs font-semibold transition shadow-lg shadow-pink-600/20 flex items-center gap-2">
+                    <i class="fa-solid fa-plus"></i> Nuevo pedido
+                </button>
+            </div>
+            <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-5" id="counter-grid"></div>
+        </div>
+
+        <!-- 1c. DELIVERY -->
+        <div id="tab-delivery" class="space-y-6 hidden">
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                <div>
+                    <h2 class="text-2xl font-bold tracking-tight text-white">Delivery</h2>
+                    <p class="text-sm text-slate-400">Pedidos a domicilio. Completá teléfono, nombre y dirección del cliente.</p>
+                </div>
+                <button onclick="createDeliveryOrder()" class="bg-pink-600 hover:bg-pink-500 text-white px-4 py-2.5 rounded-xl text-xs font-semibold transition shadow-lg shadow-pink-600/20 flex items-center gap-2">
+                    <i class="fa-solid fa-plus"></i> Nuevo delivery
+                </button>
+            </div>
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5" id="delivery-grid"></div>
+        </div>
+
         <!-- 2. SECCIÓN DE COCINA (KDS) -->
         <div id="tab-kds" class="space-y-6 hidden">
             <div class="flex items-center justify-between">
                 <div>
                     <h2 class="text-2xl font-bold tracking-tight text-white">Comandera Digital de Cocina (KDS)</h2>
-                    <p class="text-sm text-slate-400">Control de órdenes enviadas por los meseros en tiempo real.</p>
+                    <p class="text-sm text-slate-400">Solo platos (sin bebidas). Las aclaraciones del cliente aparecen debajo de cada ítem.</p>
                 </div>
                 <button onclick="showToast('KDS Sincronizado', 'info')" class="bg-slate-900 hover:bg-slate-800 border border-slate-800 text-slate-300 px-4 py-2 rounded-xl text-xs font-semibold transition flex items-center gap-2">
                     <i class="fa-solid fa-rotate"></i> Actualizar
@@ -496,6 +532,15 @@
 
                 <div class="w-full md:w-80 p-5 bg-slate-950/60 flex flex-col justify-between shrink-0">
                     <div class="space-y-4">
+                        <!-- Datos del cliente: mostrador (nombre) / delivery (tel, nombre, dirección) -->
+                        <div id="modal-customer-panel" class="hidden space-y-2 pb-3 border-b border-slate-800">
+                            <p class="text-[10px] font-bold uppercase tracking-wider text-slate-400">Datos del cliente</p>
+                            <input id="modal-customer-name" type="text" placeholder="Nombre del cliente" oninput="saveCustomerField('customerName', this.value)" class="w-full bg-slate-900 border border-slate-800 rounded-lg px-3 py-2 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-pink-500">
+                            <div id="modal-delivery-fields" class="hidden space-y-2">
+                                <input id="modal-customer-phone" type="tel" placeholder="Teléfono" oninput="saveCustomerField('phone', this.value)" class="w-full bg-slate-900 border border-slate-800 rounded-lg px-3 py-2 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-pink-500">
+                                <input id="modal-customer-address" type="text" placeholder="Dirección" oninput="saveCustomerField('address', this.value)" class="w-full bg-slate-900 border border-slate-800 rounded-lg px-3 py-2 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-pink-500">
+                            </div>
+                        </div>
                         <div class="flex items-center justify-between border-b border-slate-800 pb-3">
                             <h4 class="font-bold text-sm text-white flex items-center gap-2">
                                 <i class="fa-solid fa-receipt text-pink-400"></i> Comanda Actual
@@ -528,11 +573,16 @@
     <script>
         // MOCK DATABASE & STATE
         const tablesData = [
-            { id: 1, name: "Mesa 01", zone: "Salon", status: "free", capacity: 4, order: [] },
-            { id: 2, name: "Mesa 02", zone: "Salon", status: "occupied", capacity: 2, order: [{id: 1, name: "Burger Doble Cheddar", price: 12.50, qty: 2}, {id: 3, name: "Cerveza IPA", price: 5.00, qty: 2}] },
-            { id: 3, name: "Mesa 03", zone: "Salon", status: "occupied", capacity: 6, order: [{id: 2, name: "Pizza Margarita", price: 15.00, qty: 1}] },
-            { id: 4, name: "Mesa 04", zone: "Terraza", status: "topay", capacity: 4, order: [{id: 4, name: "Milanesa Lomo", price: 14.00, qty: 2}] },
-            { id: 5, name: "Mesa 05", zone: "VIP", status: "reserved", capacity: 8, order: [] }
+            { id: 1, type: "salon", name: "Mesa 01", zone: "Salon1", zoneLabel: "Salón 1", status: "free", capacity: 4, order: [], customerName: "", phone: "", address: "" },
+            { id: 2, type: "salon", name: "Mesa 02", zone: "Salon1", zoneLabel: "Salón 1", status: "occupied", capacity: 2, order: [{id: 1, name: "Burger Doble Cheddar", price: 12.50, qty: 2, category: "Burgers", note: "sin lechuga"}, {id: 3, name: "Cerveza IPA Artesanal", price: 5.00, qty: 2, category: "Bebidas", note: ""}], customerName: "", phone: "", address: "" },
+            { id: 3, type: "salon", name: "Mesa 03", zone: "Salon2", zoneLabel: "Salón 2", status: "occupied", capacity: 6, order: [{id: 2, name: "Pizza Margarita", price: 15.00, qty: 1, category: "Burgers", note: "masa extra crocante"}], customerName: "", phone: "", address: "" },
+            { id: 4, type: "salon", name: "Mesa 04", zone: "Salon2", zoneLabel: "Salón 2", status: "topay", capacity: 4, order: [{id: 4, name: "Milanesa Lomo c/ Papas", price: 14.00, qty: 2, category: "Burgers", note: "sin tomate"}], customerName: "", phone: "", address: "" },
+            { id: 5, type: "salon", name: "Mesa 05", zone: "Salon3", zoneLabel: "Salón 3", status: "reserved", capacity: 8, order: [], customerName: "", phone: "", address: "" },
+            { id: 6, type: "salon", name: "Mesa 06", zone: "Salon3", zoneLabel: "Salón 3", status: "free", capacity: 4, order: [], customerName: "", phone: "", address: "" },
+            { id: 7, type: "salon", name: "Mesa 07", zone: "Salon4", zoneLabel: "Salón 4", status: "free", capacity: 2, order: [], customerName: "", phone: "", address: "" },
+            { id: 8, type: "salon", name: "Mesa 08", zone: "Salon4", zoneLabel: "Salón 4", status: "occupied", capacity: 6, order: [{id: 2, name: "Pizza Margarita", price: 15.00, qty: 1, category: "Burgers", note: "con mayonesa extra"}], customerName: "", phone: "", address: "" },
+            { id: 101, type: "counter", name: "Mostrador #1", zone: "Mostrador", zoneLabel: "Mostrador", status: "occupied", capacity: 1, order: [{id: 1, name: "Burger Doble Cheddar", price: 12.50, qty: 1, category: "Burgers", note: "sin cebolla"}], customerName: "Ana Pérez", phone: "", address: "" },
+            { id: 201, type: "delivery", name: "Delivery #1", zone: "Delivery", zoneLabel: "Delivery", status: "occupied", capacity: 1, order: [{id: 4, name: "Milanesa Lomo c/ Papas", price: 14.00, qty: 1, category: "Burgers", note: "sin lechuga"}, {id: 5, name: "Limonada Menta Jengibre", price: 4.00, qty: 1, category: "Bebidas", note: ""}], customerName: "Carlos Díaz", phone: "11-5555-1234", address: "Av. San Martín 450" }
         ];
 
         const productsData = [
@@ -544,8 +594,8 @@
         ];
 
         const kdsOrders = [
-            { id: "CMD-101", table: "Mesa 02", time: "12 min", items: ["2x Burger Doble Cheddar", "2x Cerveza IPA"], status: "pending" },
-            { id: "CMD-102", table: "Mesa 03", time: "5 min", items: ["1x Pizza Margarita"], status: "pending" }
+            { id: "CMD-101", table: "Mesa 02 · Salón 1", time: "12 min", items: [{qty: 2, name: "Burger Doble Cheddar", note: "sin lechuga", category: "Burgers"}], status: "pending" },
+            { id: "CMD-102", table: "Mesa 03 · Salón 2", time: "5 min", items: [{qty: 1, name: "Pizza Margarita", note: "masa extra crocante", category: "Burgers"}], status: "pending" }
         ];
 
         // DASHBOARD DATA
@@ -578,6 +628,8 @@
         // INIT
         window.onload = function() {
             renderTables();
+            renderCounter();
+            renderDelivery();
             renderKDS();
             renderCashierAccounts();
             setDashboardView('daily');
@@ -585,7 +637,7 @@
 
         // TAB SWITCHER
         function switchTab(tabId) {
-            ['tables', 'kds', 'cashier', 'stock', 'dashboard'].forEach(t => {
+            ['tables', 'counter', 'delivery', 'kds', 'cashier', 'stock', 'dashboard'].forEach(t => {
                 document.getElementById(`tab-${t}`).classList.add('hidden');
                 const btn = document.getElementById(`nav-${t}`);
                 if(btn) {
@@ -600,41 +652,65 @@
             }
         }
 
-        // SALÓN Y MESAS LOGIC
+        const salonZones = ['all', 'Salon1', 'Salon2', 'Salon3', 'Salon4'];
+        let currentModalCat = 'all';
+        let kdsTicketSeq = 103;
+
+        function ticketStatusMeta(ticket) {
+            let statusColor = 'bg-emerald-500/10 border-emerald-500/30 text-emerald-400';
+            let statusText = 'Libre';
+            let dotColor = 'bg-emerald-500';
+            if(ticket.status === 'occupied') {
+                statusColor = 'bg-rose-500/10 border-rose-500/30 text-rose-400';
+                statusText = 'Ocupada';
+                dotColor = 'bg-rose-500';
+            } else if(ticket.status === 'topay') {
+                statusColor = 'bg-amber-500/10 border-amber-500/30 text-amber-400';
+                statusText = 'Por Cobrar';
+                dotColor = 'bg-amber-500';
+            } else if(ticket.status === 'reserved') {
+                statusColor = 'bg-blue-500/10 border-blue-500/30 text-blue-400';
+                statusText = 'Reservada';
+                dotColor = 'bg-blue-500';
+            }
+            return { statusColor, statusText, dotColor };
+        }
+
+        function ticketLabel(ticket) {
+            if(ticket.type === 'counter') return `Mostrador · ${ticket.customerName || 'Sin nombre'}`;
+            if(ticket.type === 'delivery') return `Delivery · ${ticket.customerName || 'Sin nombre'}`;
+            return `${ticket.name} · ${ticket.zoneLabel}`;
+        }
+
+        function nextTicketId() {
+            return Math.max(...tablesData.map(t => t.id), 0) + 1;
+        }
+
+        function countByType(type) {
+            return tablesData.filter(t => t.type === type).length;
+        }
+
+        function isDrink(item) {
+            return item.category === 'Bebidas';
+        }
+
+        // SALÓN (MESAS) LOGIC
         function renderTables() {
             const grid = document.getElementById('tables-grid');
             grid.innerHTML = '';
-
-            const filtered = currentZoneFilter === 'all' ? tablesData : tablesData.filter(t => t.zone === currentZoneFilter);
+            const salonTickets = tablesData.filter(t => t.type === 'salon');
+            const filtered = currentZoneFilter === 'all' ? salonTickets : salonTickets.filter(t => t.zone === currentZoneFilter);
 
             filtered.forEach(table => {
-                let statusColor = 'bg-emerald-500/10 border-emerald-500/30 text-emerald-400';
-                let statusText = 'Libre';
-                let dotColor = 'bg-emerald-500';
-
-                if(table.status === 'occupied') {
-                    statusColor = 'bg-rose-500/10 border-rose-500/30 text-rose-400';
-                    statusText = 'Ocupada';
-                    dotColor = 'bg-rose-500';
-                } else if(table.status === 'topay') {
-                    statusColor = 'bg-amber-500/10 border-amber-500/30 text-amber-400';
-                    statusText = 'Por Cobrar';
-                    dotColor = 'bg-amber-500';
-                } else if(table.status === 'reserved') {
-                    statusColor = 'bg-blue-500/10 border-blue-500/30 text-blue-400';
-                    statusText = 'Reservada';
-                    dotColor = 'bg-blue-500';
-                }
-
+                const { statusColor, statusText, dotColor } = ticketStatusMeta(table);
                 const total = table.order.reduce((acc, i) => acc + (i.price * i.qty), 0);
-
                 const card = document.createElement('div');
                 card.className = `bg-slate-900 border ${statusColor.split(' ')[1]} rounded-2xl p-4 flex flex-col justify-between hover:scale-[1.02] transition cursor-pointer shadow-lg relative h-36`;
                 card.onclick = () => openTableModal(table.id);
                 card.innerHTML = `
                     <div class="flex justify-between items-start">
                         <span class="text-xs font-bold text-white">${table.name}</span>
-                        <span class="text-[10px] text-slate-400">${table.zone}</span>
+                        <span class="text-[10px] text-slate-400">${table.zoneLabel}</span>
                     </div>
                     <div>
                         <div class="flex items-center gap-1.5 text-xs font-bold">
@@ -654,15 +730,101 @@
 
         function filterZone(zone) {
             currentZoneFilter = zone;
-            ['all', 'Salon', 'Terraza', 'VIP'].forEach(z => {
+            salonZones.forEach(z => {
                 const btn = document.getElementById(`zone-btn-${z}`);
                 if(btn) {
-                    btn.className = z === zone 
-                        ? "px-3.5 py-1.5 rounded-lg bg-pink-600 text-white transition"
-                        : "px-3.5 py-1.5 rounded-lg text-slate-400 hover:text-white transition";
+                    btn.className = z === zone
+                        ? "px-3.5 py-1.5 rounded-lg bg-pink-600 text-white transition whitespace-nowrap"
+                        : "px-3.5 py-1.5 rounded-lg text-slate-400 hover:text-white transition whitespace-nowrap";
                 }
             });
             renderTables();
+        }
+
+        function renderCounter() {
+            renderTicketGrid('counter-grid', 'counter', 'No hay pedidos de mostrador. Creá uno con “Nuevo pedido”.');
+        }
+
+        function renderDelivery() {
+            renderTicketGrid('delivery-grid', 'delivery', 'No hay deliveries activos. Creá uno con “Nuevo delivery”.');
+        }
+
+        function renderTicketGrid(gridId, type, emptyMsg) {
+            const grid = document.getElementById(gridId);
+            grid.innerHTML = '';
+            const tickets = tablesData.filter(t => t.type === type && t.status !== 'free');
+            if(tickets.length === 0) {
+                grid.innerHTML = `<div class="col-span-full p-8 text-center text-xs text-slate-500 italic">${emptyMsg}</div>`;
+                return;
+            }
+            tickets.forEach(ticket => {
+                const { statusColor, statusText, dotColor } = ticketStatusMeta(ticket);
+                const total = ticket.order.reduce((acc, i) => acc + (i.price * i.qty), 0);
+                const extra = type === 'delivery'
+                    ? `<span class="text-[10px] text-slate-400 block">${ticket.phone || 'Sin teléfono'} · ${ticket.address || 'Sin dirección'}</span>`
+                    : '';
+                const card = document.createElement('div');
+                card.className = `bg-slate-900 border ${statusColor.split(' ')[1]} rounded-2xl p-4 flex flex-col justify-between hover:scale-[1.02] transition cursor-pointer shadow-lg relative min-h-36`;
+                card.onclick = () => openTableModal(ticket.id);
+                card.innerHTML = `
+                    <div>
+                        <span class="text-xs font-bold text-white block">${ticket.customerName || ticket.name}</span>
+                        ${extra}
+                    </div>
+                    <div>
+                        <div class="flex items-center gap-1.5 text-xs font-bold">
+                            <span class="w-2 h-2 rounded-full ${dotColor}"></span>
+                            <span class="${statusColor.split(' ')[2]}">${statusText}</span>
+                        </div>
+                        <span class="text-xs text-slate-400">${ticket.order.length} items</span>
+                    </div>
+                    <div class="pt-2 border-t border-slate-800/80 flex justify-between text-xs">
+                        <span class="text-slate-500">Total</span>
+                        <span class="font-extrabold text-pink-400">$${total.toFixed(2)}</span>
+                    </div>
+                `;
+                grid.appendChild(card);
+            });
+        }
+
+        function createCounterOrder() {
+            const n = countByType('counter') + 1;
+            const ticket = {
+                id: nextTicketId(),
+                type: 'counter',
+                name: `Mostrador #${n}`,
+                zone: 'Mostrador',
+                zoneLabel: 'Mostrador',
+                status: 'occupied',
+                capacity: 1,
+                order: [],
+                customerName: '',
+                phone: '',
+                address: ''
+            };
+            tablesData.push(ticket);
+            renderCounter();
+            openTableModal(ticket.id);
+        }
+
+        function createDeliveryOrder() {
+            const n = countByType('delivery') + 1;
+            const ticket = {
+                id: nextTicketId(),
+                type: 'delivery',
+                name: `Delivery #${n}`,
+                zone: 'Delivery',
+                zoneLabel: 'Delivery',
+                status: 'occupied',
+                capacity: 1,
+                order: [],
+                customerName: '',
+                phone: '',
+                address: ''
+            };
+            tablesData.push(ticket);
+            renderDelivery();
+            openTableModal(ticket.id);
         }
 
         // COMANDERO MODAL LOGIC
@@ -670,35 +832,72 @@
             currentModalTableId = id;
             const table = tablesData.find(t => t.id === id);
             document.getElementById('modal-table-num').innerText = table.id < 10 ? `0${table.id}` : table.id;
-            document.getElementById('modal-table-title').innerText = `${table.name} (${table.zone})`;
+            document.getElementById('modal-table-title').innerText = ticketLabel(table);
             document.getElementById('modal-table-status').innerText = `Estado: ${table.status.toUpperCase()}`;
 
+            const customerPanel = document.getElementById('modal-customer-panel');
+            const deliveryFields = document.getElementById('modal-delivery-fields');
+            const needsCustomer = table.type === 'counter' || table.type === 'delivery';
+            customerPanel.classList.toggle('hidden', !needsCustomer);
+            deliveryFields.classList.toggle('hidden', table.type !== 'delivery');
+            document.getElementById('modal-customer-name').value = table.customerName || '';
+            document.getElementById('modal-customer-phone').value = table.phone || '';
+            document.getElementById('modal-customer-address').value = table.address || '';
+
+            currentModalCat = 'all';
+            document.querySelectorAll('.modal-cat-btn').forEach((btn, i) => {
+                btn.className = i === 0
+                    ? "modal-cat-btn px-3 py-1 rounded-lg bg-pink-600 text-white font-semibold transition"
+                    : "modal-cat-btn px-3 py-1 rounded-lg bg-slate-800 text-slate-300 hover:text-white transition";
+            });
             renderModalProducts();
             renderModalOrder();
             document.getElementById('table-modal').classList.remove('hidden');
         }
 
+        function saveCustomerField(field, value) {
+            const table = tablesData.find(t => t.id === currentModalTableId);
+            if(!table) return;
+            table[field] = value;
+            document.getElementById('modal-table-title').innerText = ticketLabel(table);
+        }
+
         function closeTableModal() {
             document.getElementById('table-modal').classList.add('hidden');
             renderTables();
+            renderCounter();
+            renderDelivery();
+        }
+
+        function filterModalCat(cat) {
+            currentModalCat = cat;
+            document.querySelectorAll('.modal-cat-btn').forEach(btn => {
+                btn.className = "modal-cat-btn px-3 py-1 rounded-lg bg-slate-800 text-slate-300 hover:text-white transition";
+            });
+            if(event && event.currentTarget) {
+                event.currentTarget.className = "modal-cat-btn px-3 py-1 rounded-lg bg-pink-600 text-white font-semibold transition";
+            }
+            renderModalProducts();
         }
 
         function renderModalProducts() {
             const grid = document.getElementById('modal-products-grid');
             grid.innerHTML = '';
-            productsData.forEach(p => {
+            const list = currentModalCat === 'all' ? productsData : productsData.filter(p => p.category === currentModalCat);
+            list.forEach(p => {
                 const item = document.createElement('div');
                 item.className = "bg-slate-950 border border-slate-800 rounded-xl p-3 flex flex-col justify-between hover:border-pink-500 cursor-pointer transition";
                 item.onclick = () => {
                     const table = tablesData.find(t => t.id === currentModalTableId);
                     if(table.status === 'free') table.status = 'occupied';
-                    const ex = table.order.find(i => i.id === p.id);
+                    const ex = table.order.find(i => i.id === p.id && !(i.note || ''));
                     if(ex) ex.qty += 1;
-                    else table.order.push({ id: p.id, name: p.name, price: p.price, qty: 1 });
+                    else table.order.push({ id: p.id, name: p.name, price: p.price, qty: 1, category: p.category, note: '' });
                     renderModalOrder();
                 };
                 item.innerHTML = `
                     <h5 class="text-xs font-bold text-white">${p.name}</h5>
+                    <span class="text-[10px] text-slate-500">${p.category === 'Bebidas' ? 'Bebida' : 'Comida'}</span>
                     <span class="text-xs font-black text-pink-400 mt-2">$${p.price.toFixed(2)}</span>
                 `;
                 grid.appendChild(item);
@@ -714,22 +913,30 @@
             table.order.forEach((item, idx) => {
                 total += item.price * item.qty;
                 const row = document.createElement('div');
-                row.className = "flex items-center justify-between bg-slate-900 border border-slate-800 p-2 rounded-xl text-xs";
+                row.className = "bg-slate-900 border border-slate-800 p-2 rounded-xl text-xs space-y-1.5";
                 row.innerHTML = `
-                    <div>
-                        <p class="font-bold text-white">${item.name}</p>
-                        <span class="text-slate-400">$${item.price.toFixed(2)}</span>
+                    <div class="flex items-center justify-between gap-2">
+                        <div>
+                            <p class="font-bold text-white">${item.name}</p>
+                            <span class="text-slate-400">$${item.price.toFixed(2)}</span>
+                        </div>
+                        <div class="flex items-center gap-2 shrink-0">
+                            <button onclick="changeQty(${idx}, -1)" class="w-5 h-5 rounded bg-slate-800 text-slate-300">-</button>
+                            <span class="font-bold text-white">${item.qty}</span>
+                            <button onclick="changeQty(${idx}, 1)" class="w-5 h-5 rounded bg-slate-800 text-slate-300">+</button>
+                        </div>
                     </div>
-                    <div class="flex items-center gap-2">
-                        <button onclick="changeQty(${idx}, -1)" class="w-5 h-5 rounded bg-slate-800 text-slate-300">-</button>
-                        <span class="font-bold text-white">${item.qty}</span>
-                        <button onclick="changeQty(${idx}, 1)" class="w-5 h-5 rounded bg-slate-800 text-slate-300">+</button>
-                    </div>
+                    ${isDrink(item) ? '' : `<input type="text" value="${(item.note || '').replace(/"/g, '&quot;')}" placeholder="Aclaración: sin lechuga, extra mayo..." oninput="setItemNote(${idx}, this.value)" class="w-full bg-slate-950 border border-slate-800 rounded-lg px-2 py-1 text-[10px] text-amber-300 placeholder-slate-600 focus:outline-none focus:border-amber-500">`}
                 `;
                 container.appendChild(row);
             });
 
             document.getElementById('modal-total').innerText = `$${total.toFixed(2)}`;
+        }
+
+        function setItemNote(idx, value) {
+            const table = tablesData.find(t => t.id === currentModalTableId);
+            if(table && table.order[idx]) table.order[idx].note = value;
         }
 
         function changeQty(idx, delta) {
@@ -747,7 +954,21 @@
         }
 
         function sendOrderToKitchen() {
-            showToast('Comanda enviada a cocina (KDS)', 'success');
+            const table = tablesData.find(t => t.id === currentModalTableId);
+            const foodItems = table.order.filter(i => !isDrink(i));
+            if(foodItems.length === 0) {
+                showToast('No hay comida para cocina (las bebidas no se envían)', 'info');
+                return;
+            }
+            kdsOrders.unshift({
+                id: `CMD-${kdsTicketSeq++}`,
+                table: ticketLabel(table),
+                time: 'Ahora',
+                items: foodItems.map(i => ({ qty: i.qty, name: i.name, note: i.note || '', category: i.category })),
+                status: 'pending'
+            });
+            renderKDS();
+            showToast('Comida enviada a cocina (sin bebidas)', 'success');
             closeTableModal();
         }
 
@@ -766,15 +987,22 @@
             kdsOrders.forEach((o, index) => {
                 const isReady = o.status === 'ready';
                 const card = document.createElement('div');
-                card.className = `bg-slate-900 border ${isReady ? 'border-emerald-500/40' : 'border-slate-800'} rounded-2xl p-4 flex flex-col justify-between h-56`;
+                card.className = `bg-slate-900 border ${isReady ? 'border-emerald-500/40' : 'border-slate-800'} rounded-2xl p-4 flex flex-col justify-between min-h-56`;
                 card.innerHTML = `
                     <div>
                         <div class="flex justify-between items-center pb-2 border-b border-slate-800">
                             <span class="font-bold text-pink-400 text-xs">${o.id} - ${o.table}</span>
                             <span class="text-[10px] text-amber-400"><i class="fa-regular fa-clock"></i> ${o.time}</span>
                         </div>
-                        <ul class="mt-3 space-y-1 text-xs text-slate-300">
-                            ${o.items.map(i => `<li>• ${i}</li>`).join('')}
+                        <ul class="mt-3 space-y-2 text-xs text-slate-300 overflow-y-auto custom-scrollbar max-h-40">
+                            ${o.items.filter(i => !isDrink(i)).map(i => {
+                                const label = typeof i === 'string' ? i : `${i.qty}x ${i.name}`;
+                                const note = typeof i === 'string' ? '' : (i.note || '');
+                                return `<li>
+                                    <span class="font-semibold text-white">• ${label}</span>
+                                    ${note ? `<p class="ml-3 text-[10px] text-amber-400 font-medium">Aclaración: ${note}</p>` : ''}
+                                </li>`;
+                            }).join('')}
                         </ul>
                     </div>
                     <button onclick="toggleKDS(${index})" class="w-full py-2 rounded-xl text-xs font-bold transition ${isReady ? 'bg-slate-800 text-slate-300' : 'bg-emerald-600 hover:bg-emerald-500 text-white'}">
@@ -809,7 +1037,7 @@
                 item.onclick = () => selectCashierTable(t.id);
                 item.innerHTML = `
                     <div>
-                        <h5 class="font-bold text-xs">${t.name}</h5>
+                        <h5 class="font-bold text-xs">${ticketLabel(t)}</h5>
                         <span class="text-[10px] text-slate-400">${t.order.length} consumos</span>
                     </div>
                     <span class="font-extrabold text-pink-400 text-xs">$${total.toFixed(2)}</span>
@@ -823,7 +1051,7 @@
             renderCashierAccounts();
 
             const table = tablesData.find(t => t.id === id);
-            document.getElementById('active-checkout-title').innerText = table.name;
+            document.getElementById('active-checkout-title').innerText = ticketLabel(table);
             
             const itemsList = document.getElementById('checkout-items-list');
             itemsList.innerHTML = '';
@@ -831,7 +1059,7 @@
                 const row = document.createElement('div');
                 row.className = "p-2.5 flex justify-between items-center text-xs border-b border-slate-900";
                 row.innerHTML = `
-                    <span class="text-white font-medium">${item.qty}x ${item.name}</span>
+                    <span class="text-white font-medium">${item.qty}x ${item.name}${item.note ? ` <span class="text-amber-400">(${item.note})</span>` : ''}</span>
                     <span class="text-pink-300 font-bold">$${(item.price * item.qty).toFixed(2)}</span>
                 `;
                 itemsList.appendChild(row);
@@ -873,6 +1101,8 @@
             showToast(`Pago procesado exitosamente mediante ${payMethod}`, 'success');
             renderCashierAccounts();
             renderTables();
+            renderCounter();
+            renderDelivery();
 
             document.getElementById('active-checkout-title').innerText = "Seleccione una Mesa";
             document.getElementById('active-checkout-total').innerText = "$0.00";
